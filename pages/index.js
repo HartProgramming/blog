@@ -19,12 +19,13 @@ const Blog_Posts = [
   },
 ];
 
-function HomePage() {
+function HomePage(props) {
+  console.log(props)
   return (
     <>
       <h1>Blogs</h1>
       <div>
-        {Blog_Posts.map((blog) => (
+        {props.blogPosts.map((blog) => (
           <BlogItem
             key={blog.id}
             title={blog.title}
@@ -36,11 +37,32 @@ function HomePage() {
         ))}
       </div>
     </>
-  );
+ );
+}
+/*
+export async function getServerSideProps(context){
+
+  const { req, res } = context;
+  console.log(req, res);
+
+  return{
+    props: {
+      blogPosts: Blog_Posts
+    }
+  }
+}
+*/
+
+
+export async function getStaticProps(){
+
+  return{
+    props: {
+      blogPosts: Blog_Posts
+    },
+    revalidate: 3600
+  }
 }
 
-export function getStaticProps(){
-  
-}
 
 export default HomePage;
